@@ -1,0 +1,53 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <!--  <navigator url="https://wx.gzis.org.cn/dszr/web/" hover-class="navigator-hover">跳转到新页面</navigator>-->
+     <!-- <web-view src="https://wx.gzis.org.cn/dszr/web/"></web-view> -->
+  </view>
+
+
+<form  bindsubmit="formSubmit" bindreset="formReset" action="https://wx.gzis.org.cn/dszr/web/index.php/index/register">
+  <view class="section">
+    <view class="section__title">企业名称</view>
+    <view class="section_input"><input name="org_name" value="{{form.org_name}}" placeholder="点此填写" /></view>
+  </view>
+
+  <view class="section">
+    <view class="section__title">统一社会信用代码</view>
+    <view class="section_input"><input name="org_code"  value="{{form.org_code}}" placeholder="点此填写" /></view>
+  </view>
+
+  <view class="section">
+    <view class="section__title">经办人姓名</view>
+    <view class="section_input"><input name="jbr_name" value="{{form.jbr_name}}" placeholder="点此填写" /></view>
+  </view>
+
+  <view class="section">
+    <view class="section__title">经办人身份证</view>
+    <view class="section_input"><input name="jbr_ID" value="{{form.jbr_ID}}" placeholder="点此填写" /></view>
+  </view>
+
+  <view class="section">
+    <view class="section__title">经办人邮箱</view>
+    <view class="section_input"><input name="jbr_mail" value="{{form.jbr_mail}}"  placeholder="点此填写" /></view>
+  </view>
+
+  <view class="section">
+    <view class="section__title">经办人手机</view>
+    <view class="section_input"><input name="jbr_phone" value="{{form.jbr_phone}}" placeholder="点此填写" /></view>
+  </view>
+  <input type='hidden' value="{{form.wxopenid}}" id="dsf" name='status'></input>
+  <view class="section_btn">
+    <button formType="submit" name="btnSubmit" class="btnSubmit">注册</button>
+  </view>
+
+
+</form>
+</view>

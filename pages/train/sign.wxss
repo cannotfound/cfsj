@@ -1,0 +1,29 @@
+.container{
+  width: 99%;
+}
+.lb{
+  color: limegreen;
+}
+.title{
+  min-height: 50px;
+}
+form{
+  width: 96%;
+}
+form view{
+  width: 98%;
+  margin-bottom: 20px;
+  border: 0.5px solid;
+  border-radius: 5px;
+  border-color: whitesmoke;
+  font-size: 14px;
+  padding: 6px;
+}
+form input{
+  font-size: 16px;
+  padding: 6px;
+}
+button{
+  background-color: limegreen;
+  color: #fff;
+}

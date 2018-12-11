@@ -1,0 +1,64 @@
+.container{
+
+width: 99%;
+padding-top: 2px;
+
+}
+.container view{
+  width: 90%;
+  padding: 0 0 0.5em 0.3em;
+  margin: 10px 0 0 10px;
+}
+.title{
+  border-bottom: 1px solid;
+  padding: 0 0 0.5em 1em;
+}
+.detail .lb{
+  width: 300px;
+}
+.lb{
+  background-color: deepskyblue;
+  width: 80%;
+  border-radius: 8px 0px 8px 0px;
+  padding: 3px;
+}
+.detail , .ftdate , .place , .start_time , .contact , .tel{
+  font-size: 14px;
+}
+.rv{
+  margin: 0 0 0 10px;
+  width: 50%;
+  font-size: 14px;
+}
+.foot{
+     border-bottom: 1px solid;
+}
+.sign{
+ 
+  background-color: limegreen;
+  border-radius: 6px;
+  margin-top: 30px;
+  text-align: center;
+  padding: 10px;
+  width: 90%;
+  color: #fff;
+}
+.attlist button{
+ background-color: limegreen;
+}
+.attlist .lb{
+  font-size: 13px;
+}
+.attlist label{
+    font-size: 13px;
+}
+.fcell{
+  background: limegreen;
+    color: #fff;
+  border: 1px solid #fafafa;
+  border-radius: 8px;
+  padding: 13px 0 0 30px;
+  background-image:  url("https://wx.gzis.org.cn/dszr/web/images/download_32_c.png");
+  background-repeat: no-repeat;
+  background-position: right;
+}

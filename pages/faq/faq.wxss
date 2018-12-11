@@ -1,0 +1,27 @@
+.container {
+
+  padding-top: 100px;
+ 
+}
+.list{
+  width: 98%;
+
+}
+.list view{
+  width: 98%;
+  display: flex;
+  justify-content: center;
+}
+.cell {
+  border-top: 1px solid palegreen;
+  border-left: 1px solid palegreen;
+  border-right: 1px solid palegreen;
+  padding: 10px;
+  width: 85%;
+  font-size: 14px;
+
+}
+
+.foot-cell {
+  border-bottom: 1px solid palegreen;
+}

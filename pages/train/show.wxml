@@ -1,0 +1,34 @@
+<view class="container">
+
+<view class="title">{{lesson.title}}</view>
+
+<view class="detail"><label class="lb">培训内容：</label></view>
+
+<view><label class="rv" >{{lesson.detail}}</label></view>
+
+<view class="ftdate"><label class="lb">开始日期：</label> <label class="rv" >{{lesson.from_date}}</label></view>
+
+<view class="ftdate"><label class="lb">结束日期：</label> <label class="rv" >{{lesson.to_date}}</label></view>
+
+<view class="start_time"><label class="lb">上课时间：</label> <label class="rv" >{{lesson.first_day_start_time}}</label></view>
+
+<view class="place"><label class="lb">培训地点：</label> <label class="rv" >{{lesson.place}}</label></view>
+
+<view class="contact"><label class="lb">联系人：</label> <label class="rv" >{{lesson.contact}}</label></view>
+
+<view class="tel"><label class="lb">联系电话：</label> <label class="rv" >{{lesson.tel}}</label></view>
+
+<view class='attlist'>
+<label class="lb">培训课件：</label>
+  <view  class="fcell" wx:for="{{flist}}" wx:for-index="key" wx:key='fe.id'  wx:for-item="fe">
+ <view  id='{{fe.file_path}}' bindtap="downloadFile" >
+ <label style="display:none" >{{fe.id}}</label>
+  <label >{{fe.file_name}} - 点我下载</label>
+  </view>
+  </view>
+</view>
+
+<view class="foot"> </view>
+
+<navigator class='sign' url="sign?lid={{lesson.id}}&title={{lesson.title}}">点我报名</navigator>
+</view>

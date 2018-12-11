@@ -1,0 +1,19 @@
+
+<view class="container">
+
+  <view  class='tlist'>
+  <label>已经报名的培训：</label>
+    <view wx:for="{{tlist}}" wx:for-index="key" wx:key='tv.id'  wx:for-item="tv">
+    <label>{{tv.Lesson.title}}</label>
+    </view>
+  </view>
+</view>
+
+<view class='container' wx:for="{{list}}" wx:for-index="key" wx:key='value.id'  wx:for-item="value">
+
+<navigator class="row" url="show?id={{value.id}}">
+<view class="title">{{value.title}}</view> 
+<view class="from_date">{{value.from_date}} 到 {{value.to_date}}</view> 
+</navigator>
+
+</view>

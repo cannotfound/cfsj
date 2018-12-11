@@ -1,0 +1,60 @@
+<view class="container">
+ 
+ <!-- 
+<view style='width:100%; align: center;'><image  class="top_img" src="../../images/logo.png"></image></view>
+-->
+
+<view  class="top_img">
+<swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
+  <block  wx:for="{{imgUrls}}" wx:key="id" wx:for-item="cell">
+    <swiper-item  >
+      <navigator   url='../webview/gogzis?id={{cell.id}}'><image src="{{cell.url}}" class="slide-image" /></navigator>
+    </swiper-item>
+  </block>
+</swiper>
+</view>
+
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
+    </block>
+
+      <view>
+  <navigator url="../register/register" class="register_org_name" wx:if="false">暂未绑定法人1</navigator>
+ <block wx:else>
+  <text  class="register_org_name">{{register_org_name}}</text>
+    </block>
+  </view>
+  </view>
+
+
+
+
+
+<view class="list" >
+<view class="v1 vall v123">
+<!-- <image class="hp_img" src="/images/banli.png" style="width: 64px; height: 64px; background-color: #FFF;"></image>-->
+<text>新办业务\n\t(敬请期待)</text>
+</view>
+
+<view class="v23  v123">
+<navigator  class="v2 vall" url='../article/article'>通知公告</navigator>
+
+  <navigator url="../webview/gogzis" class="v3 vall">办事指南</navigator>
+  <!-- <web-view src="https://wx.gzis.org.cn/dszr/web/index.php/index/redirect">办事指南</web-view> -->
+</view>
+
+
+ <navigator  class="v4 vall"  url='../train/index}'>培训</navigator>
+
+
+
+
+<navigator  class="v5 vall" url='../faq/faq'>业务问答</navigator>
+
+
+</view>
+
+</view>

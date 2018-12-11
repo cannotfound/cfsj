@@ -1,0 +1,65 @@
+/* pages/article/article.wxss */
+page{
+  height: 100%;
+  width: 100%;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  position: fixed;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content: center;
+}
+
+#list {
+  width: 98%;
+    align-items: center;
+  justify-content: center;
+}
+#list > view, #list > view > navigator{
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.edit_date {
+  margin: 3px 10px 10px 0px;
+
+  padding: 5px 10px 5px 5px;
+  font-size: 14px;
+  width: 30%;
+}
+
+.title {
+  padding: 5px 10px 5px 5px;
+  font-size: 16px;
+
+}
+
+.row {
+  font-size: 18px;
+  border: 0.5px solid #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  outline: none;
+  padding: 4px 6px;
+  margin: 10px 0 0 0;
+  background: -webkit-linear-gradient(left, #05A0D6, #24CBF7); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #05A0D6, #7CE48D); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #05A0D6, #7CE48D); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #47B7F5 , #9AD7F9); /* 标准的语法 */
+  width: 90%;
+  color: #FFFFFF;
+}
+
+.detail {
+  border-top: 1px solid #EBEBEB;
+  font-size: 11px;
+  margin: 20px 10px 0px 5px;
+  padding: 10px 0px 3px 1px;
+}
