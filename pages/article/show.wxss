@@ -1,3 +1,4 @@
+@import "../../wxParse/wxParse.wxss";
 .container {
   width: 99%;
   padding-top: 20px;

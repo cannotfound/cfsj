@@ -19,6 +19,7 @@
 
 .userinfo-nickname {
   color: #aaa;
+  font-size: 14px;
 }
 
 .usermotto {

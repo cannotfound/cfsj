@@ -2,7 +2,7 @@
 <view class="container">
 
   <view  class='tlist'>
-  <label>已经报名的培训：</label>
+  <label>{{lesson_fullname}}已经报名的培训：</label>
     <view wx:for="{{tlist}}" wx:for-index="key" wx:key='tv.id'  wx:for-item="tv">
     <label>{{tv.Lesson.title}}</label>
     </view>

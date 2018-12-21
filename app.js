@@ -31,12 +31,19 @@ App({
               }
             }
           })
+        }else{
+          console.log('没有授权')
         }
+      },
+      fail: function(res){
+        console.log(res)
       }
     })
   },
   globalData: {
     userInfo: null,
     secret: '97Hi',
+    filetype_license: 1,//营业执照
+    filetype_ticket: 2, // 汇款凭证
   }
 })

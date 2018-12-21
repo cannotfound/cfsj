@@ -1,0 +1,120 @@
+<view class='container'>
+
+  <view class="list">
+    <view class="title {{currentStep == 0 ? 'current' : ''}}" bindtap='navStep' data-current="1">①注册</view>
+    <view class="title {{currentStep == 1 ? 'current' : ''}}" bindtap='navStep' data-current="2">②上传资料</view>
+    <view class="title {{currentStep == 2 ? 'current' : ''}}" bindtap='navStep' data-current="3">③下载表格</view>
+  </view>
+
+  <swiper bindchange='navStep' current='{{currentStep}}' class='box' style="height:{{swiperHeight}}px">
+
+    <swiper-item id='registerItem' style="height:80%;">
+
+
+      <form id='registerForm' bindsubmit="formSubmit" bindreset="formReset" action="https://wx.gzis.org.cn/dszr/web/index.php/index/register">
+
+
+        <view class="section" id="topView">
+          <view class="section__title">企业名称</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="org_name" value="{{form.org_name}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section">
+          <view class="section__title">法人</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="legal_person" value="{{form.legal_person}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section">
+          <view class="section__title">法人手机</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="legal_phone" value="{{form.legal_phone}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section">
+          <view class="section__title">经办人姓名</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="jbr_name" value="{{form.jbr_name}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section">
+          <view class="section__title">经办人身份证</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="jbr_ID" value="{{form.jbr_ID}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section">
+          <view class="section__title">经办人邮箱</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="jbr_mail" value="{{form.jbr_mail}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section">
+          <view class="section__title">经办人手机</view>
+          <view class="section_input">
+            <input disabled='{{haveRegistered}}' name="jbr_phone" value="{{form.jbr_phone}}" placeholder="点此填写" />
+          </view>
+        </view>
+
+        <view class="section_btn" id="bottomView">
+          <navigator class="goEdit" url="../register/register?method=view">修改注册资料</navigator>
+          <button wx:if="{{haveRegistered}}" bindtap='goStep' id="2" name="btnEdit" class="btnSubmit">已注册, 点击下一步</button>
+          <button wx:if="{{!haveRegistered}}" formType="submit" name="btnSubmit" class="btnSubmit">注册</button>
+        </view>
+
+
+      </form>
+
+
+    </swiper-item>
+
+    <swiper-item>
+      <view class="step2">
+
+        <button bindtap='showAccountBtn' class="btnSubmit">查看汇款资料</button>
+
+        <button wx:if="{{u_license}}" class="btnReady">营业执照已上传</button>
+        <button wx:else class="btnSubmit" bindtap='uploadBtn' id="1">点击上传营业执照</button>
+
+        <button wx:if='{{u_ticket}}' class="btnReady">汇款凭证已上传</button>
+        <button wx:else class="btnSubmit" bindtap='uploadBtn' id="2">点击上传汇款凭证</button>
+
+        <button wx:if="{{u_license && u_ticket}}" class="btnSubmit" bindtap='resetFileBtn' id="99">重新上传</button>
+
+
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="step3">
+
+        <view class="showStatus">
+          <view class="label">营业执照审核：  <text class="accept_status">{{license_accept_status}}</text></view>
+        
+        </view>
+
+        <view class="showStatus">
+          <view class="label">汇款凭证审核： <text class="accept_status">{{ticket_accept_status}}</text></view>
+         
+        </view>
+
+        <view wx:if="{{license_accept_status === '通过' && ticket_accept_status === '通过'}}">
+        <button class="btnSubmit" bindtap='copyToClipTap'>点击复制表格下载链接</button>
+        </view>
+
+
+      </view>
+
+    </swiper-item>
+  </swiper>
+
+
+
+
+</view>

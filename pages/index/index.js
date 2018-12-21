@@ -3,7 +3,7 @@
 
 import WxValidate from '../../utils/WxValidate.js';
 const app = getApp()
-
+var util = require('../../utils/util.js');
 Page({
   data: {
     motto: 'Hello World',
@@ -11,6 +11,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     register_org_name: '暂未绑定法人',
+    haveRegistered: false,
     wxopenid: null,
     imgUrls:[
       {id: 1, url: 'https://wx.gzis.org.cn/topimg1.jpg',},
@@ -40,79 +41,25 @@ Page({
       mask: true
     });
 
-
-
-    this.getUser();
-
-    this.wxlogin();
-
+ 
+    //this.getUser();
+    
+    util.wxlogin(this);
     
   },
 
-wxlogin(){
-  var that = this;
-  wx.login({
-
-    success: function (res) {
-      //console.log(res);
-
-      wx.request({
-        url: 'https://wx.gzis.org.cn/dszr/web/index.php/index/authcodeAjax',
-        method: "POST",
-        header: { 'Content-type': 'application/x-www-form-urlencoded' },
-        data: { code: res.code, sec: app.globalData.secret, },
-        success: function (res) {
-
-          if(res.data == 'error') return;
-          console.log("authcode success..");
-          //console.log(res);
-          var openid = res.data;
-          that.setData({
-            wxopenid: openid
-          });
-          wx.setStorageSync('openid', openid);
-          that.getRegisterInfo();
-
-        },
-        fail: function (ex) {
-          console.log(ex.errMsg + ":authcode");
-        }
+  onShow: function () {
+    var juser = wx.getStorageSync('juser');
+    if (!util.isBlank(juser)) {
+      this.setData({
+        form: juser,
+        haveRegistered: true,
+        register_org_name: juser.org_name
       })
-
     }
 
-  })
-},
-
-  getRegisterInfo(){
-    var that = this;
-    var wxopenid = wx.getStorageSync('openid');
-    wx.request({
-      url: 'https://wx.gzis.org.cn/dszr/web/index.php/index/GetUserAjax',
-      method: 'POST',
-      header: { 'Content-type': 'application/x-www-form-urlencoded' },
-      data: { openid: wxopenid, sec: app.globalData.secret },
-      success: function(res){
-      console.log(res)
-        
-       if(!res.data.org_name){
-         console.log('空空空');
-       }else{
-         
-         wx.setStorageSync('juser', res.data);
-         that.setData({
-           register_org_name : res.data.org_name,
-         });
-
-        
-       }
-      },
-      complete: function(res){
-        wx.hideLoading();
-      }
-    })
-
   },
+
 
   getUser () {
     if (app.globalData.userInfo) {
@@ -154,6 +101,14 @@ wxlogin(){
 
   getUserInfo: function(e) {
     console.log(e)
+    if (e.detail.errMsg == 'getUserInfo:fail auth deny') {
+      console.log('退出 -------------')
+      var pages = getCurrentPages();
+      wx.navigateBack({
+        delta: -1,
+      })
+
+    }
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,

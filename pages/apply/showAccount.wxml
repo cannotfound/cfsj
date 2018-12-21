@@ -1,0 +1,23 @@
+<view class='list'>
+
+<text>
+通过银行汇款至以下帐号：\n
+ 开户名称：中国物品编码中心\n
+ 开户银行：交通银行北京分行和平里支行\n
+ 银行帐号：110060224010149084052\n
+ 收费标准见下表:\n
+</text>
+
+
+<view class='tr'>
+<view class="th tdleft">单位类型</view>
+<view class="th">申办费用(元）</view>
+</view>
+
+<view class='tr' wx:for='{{chargeArray}}' wx:key='index' >
+<view class="td tdleft">{{index}}</view>
+<view class="td tdnumber">{{item}}</view>
+</view>
+
+
+</view>

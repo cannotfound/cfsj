@@ -1,7 +1,22 @@
-<view class="container">
+<view class="">
 
 <view class="title">{{title}}</view>
 <view class="edit_date">{{edit_date}}</view>
-<view class="content">{{content}}</view>
+<view class="content">
+<!--
+<textarea>{{content}}</textarea> -->
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="index">
+    <view class="news">
+        <view class="news-item line">
+            <view class="news-details-content wxParse">
+                <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+</view>
 
 </view>

@@ -1,25 +1,33 @@
 // pages/faq/faq.js
 const app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
+const company = require("test.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list: []
+    list: [],
+    item: null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var that = this;
+    var data = { content: company.content };
+ 
+    WxParse.wxParse('content', 'html', data.content, that, 25);
+
+
     wx.showLoading({
       title: '正在加载',
       mask: true
     });
 
-    var that = this;
+    
     wx.request({
       url: 'https://wx.gzis.org.cn/dszr/web/index.php/faq/listAjax',
       method: 'POST',

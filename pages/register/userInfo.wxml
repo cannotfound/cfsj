@@ -1,0 +1,39 @@
+<view class='container'>
+
+  <view class="row">
+    <view>企业名称：</view>
+    <view>{{juser.org_name}}</view>
+  </view>
+
+  <view class="row">
+    <view>法人姓名：</view>
+    <view>{{juser.legal_person}}</view>
+  </view>
+  <view class="row">
+    <view>法人手机：</view>
+    <view>{{juser.legal_phone}}</view>
+  </view>
+  <view class="row">
+    <view>经办人姓名：</view>
+    <view>{{juser.jbr_name}}</view>
+  </view>
+  <view class="row">
+    <view>经办人身份证：</view>
+    <view>{{juser.jbr_ID}}</view>
+  </view>
+  <view class="row">
+    <view>经办人手机：</view>
+    <view>{{juser.jbr_phone}}</view>
+  </view>
+  <view class="row">
+    <view>经办人邮箱：</view>
+    <view>{{juser.jbr_mail}}</view>
+  </view>
+  <view class="row">
+    <view>注册时间：</view>
+    <view>{{juser.register_time}}</view>
+  </view>
+
+
+
+</view>

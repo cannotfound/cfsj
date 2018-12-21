@@ -22,7 +22,7 @@
   align-items: center;
 
 }
-
+.userinfo navigator{ width: auto;}
 .userinfo-avatar {
   width: 64rpx;
   height: 64rpx;

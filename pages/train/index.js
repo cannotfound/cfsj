@@ -1,5 +1,6 @@
 // pages/train/index.js
 const app = getApp()
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -7,7 +8,8 @@ Page({
    */
   data: {
     list: [],
-    tlist: []
+    tlist: [],
+    lesson_fullname: null,
   },
 
   /**
@@ -15,8 +17,10 @@ Page({
    */
   onLoad: function(options) {
 
-
-
+    var fullname = wx.getStorageSync('lesson_fullname');
+    this.setData({
+      lesson_fullname: fullname,
+    });
 
     wx.showLoading({
       title: '正在加载',
@@ -52,9 +56,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
+    //this.selectApply(); 
 
-    var juser = wx.getStorageSync('juser');
-    var userId = juser.id;
+  },
+
+selectApply: function(){
+
+  var phone = wx.getStorageSync('lesson_phone');
+  if (!util.isBlank(phone)) {
     var that = this;
     wx.request({
       url: 'https://wx.gzis.org.cn/dszr/web/index.php/lesson/selectApplyAjax',
@@ -63,23 +72,24 @@ Page({
         'Content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        userid: userId,
+        phone: phone,
         sec: app.globalData.secret
       },
-      success: function(res) {
+      success: function (res) {
         console.log(res)
         that.setData({
           tlist: res.data
         });
       }
     })
+  }
 
-  },
-
+},
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    this.selectApply(); 
 
   },
 

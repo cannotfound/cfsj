@@ -3,7 +3,7 @@
 
 import WxValidate from '../../utils/WxValidate.js';
 const app = getApp()
-
+var util = require('../../utils/util.js')
 Page({
   data: {
     motto: 'Hello World',
@@ -17,9 +17,14 @@ Page({
       jbr_ID: '440124198801015222',
       jbr_mail: '34587@qq.com',
       jbr_phone: '15018735310',
+      legal_person: '李大鹏1',
+      legal_phone: '15018735310',
       wxopenid: '123',
 
-    }
+    },
+    showInfo: false,
+    showSaveBtn: false,
+    hiddenEditBtn: false,
 
   },
   //事件处理函数
@@ -30,10 +35,21 @@ Page({
   },
   onReady() {
 
-    this.initValidate();
+    util.initValidate(this);
 
   },
-  onLoad() {
+  onLoad(options) {
+
+    this.setData({
+      showInfo: options.method == 'view' ? true : false,
+    });
+    if(options.method == 'view'){
+      this.setData({
+        form: wx.getStorageSync('juser'),
+      });
+    }
+
+
     this.getUser();
 
 
@@ -70,48 +86,6 @@ Page({
     })
   },
 
-  initValidate() {
-    const rules = {
-      org_name: {
-        required: true,
-        minlength: 2,
-      },
-      org_code: {
-        required: true,
-      },
-      jbr_name: {
-        required: true,
-      },
-      jbr_ID: { required: true, idcard: true, },
-      jbr_phone: { required: true, tel: true, },
-      jbr_mail: { required: true, email: true, },
-
-    }
-    const messages = {
-      org_name: {
-        required: '请填写企业名称',
-      },
-      org_code: {
-        required: '请填写信用代码',
-      },
-      jbr_name: {
-        required: '请填写姓名',
-      },
-      jbr_ID: {
-        required: '请填写身份证',
-      },
-      jbr_mail: {
-        required: '请填写邮箱',
-      },
-      jbr_phone: {
-        required: '请填写手机号码',
-        tel: '请填写正确的手机号'
-      },
-
-    }
-    this.WxValidate = new WxValidate(rules, messages);
-  },
-
   getUser() {
     if (app.globalData.userInfo) {
       this.setData({
@@ -142,16 +116,9 @@ Page({
   },
 
 
-  showModal(error) {
-    wx.showModal({
-      content: error.msg,
-      showCancel: false,
-    })
-  },
-
-
   getUserInfo: function (e) {
     console.log(e)
+
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -159,23 +126,65 @@ Page({
     })
   },
 
+  editUser: function(e){
+
+    console.log('form发生了editUser事件，携带数据为：', e);
+    this.setData({
+      showSaveBtn: true,
+      hiddenEditBtn: true,
+    });
+
+  },
+
+  deleteUser: function(e){
+
+    wx.request({
+      url: 'https://wx.gzis.org.cn/dszr/web/index.php/index/deleteUserAjax',
+      method: "POST",
+      data: {
+        openid: wx.getStorageSync('openid'),
+        sec: app.globalData.secret
+      },
+      header: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log(res)
+        wx.showModal({
+          title: '提示',
+          content: res.data.msg,
+          showCancel: false,
+          complete: function () {
+            wx.redirectTo({
+              url: '../index/index',
+            })
+          }
+        })
+
+      },
+      fail: function (ex) {
+        console.log(ex.errMsg + " : delete user ajax");
+      }
+    })
+  },
 
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value);
-
     const params = e.detail.value;
     if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0];
-      this.showModal(error);
+      util.showModal(error);
       return false;
     } else {
 
       var formValues = JSON.stringify({
-        org_name: e.detail.value.org_name, unit_code: e.detail.value.org_code,
+        org_name: e.detail.value.org_name, 
+        legal_person: e.detail.value.legal_person, legal_phone: e.detail.value.legal_phone,
         jbr_name: e.detail.value.jbr_name, jbr_phone: e.detail.value.jbr_phone,
         jbr_ID: e.detail.value.jbr_ID, jbr_mail: e.detail.value.jbr_mail,
         _csrf_token: '76be886ef32f9151fd9bbfbce9d53e0b',
         jbr_weixin: this.data.form.wxopenid,
+        method: this.data.showInfo == true ? 'edit' : 'new',
       });
 
       wx.request({

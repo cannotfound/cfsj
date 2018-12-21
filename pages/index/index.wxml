@@ -8,23 +8,26 @@
 <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
   <block  wx:for="{{imgUrls}}" wx:key="id" wx:for-item="cell">
     <swiper-item  >
-      <navigator   url='../webview/gogzis?id={{cell.id}}'><image src="{{cell.url}}" class="slide-image" /></navigator>
+      <navigator url='../webview/gogzis?id={{cell.id}}'><image src="{{cell.url}}" class="slide-image" /></navigator>
     </swiper-item>
   </block>
 </swiper>
 </view>
 
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权 </button>
+    <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+    <!-- <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权 </button>
+    <view wx:else>请升级微信版本</view>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
-    </block>
+       <text class="userinfo-nickname">{{userInfo.nickName}}</text> 
+    </block>-->
 
-      <view>
-  <navigator url="../register/register" class="register_org_name" wx:if="false">暂未绑定法人1</navigator>
+    <view>
+  <navigator url="../register/register" class="register_org_name" wx:if="{{!haveRegistered}}">暂未绑定法人</navigator>
+  
  <block wx:else>
-  <text  class="register_org_name">{{register_org_name}}</text>
+  <navigator url="../register/register?method=view" class="register_org_name">{{register_org_name}}</navigator>
     </block>
   </view>
   </view>
@@ -34,10 +37,11 @@
 
 
 <view class="list" >
-<view class="v1 vall v123">
+
 <!-- <image class="hp_img" src="/images/banli.png" style="width: 64px; height: 64px; background-color: #FFF;"></image>-->
-<text>新办业务\n\t(敬请期待)</text>
-</view>
+<navigator class="v1 vall v123" url='../apply/index'>新办业务</navigator>
+
+
 
 <view class="v23  v123">
 <navigator  class="v2 vall" url='../article/article'>通知公告</navigator>
@@ -47,10 +51,7 @@
 </view>
 
 
- <navigator  class="v4 vall"  url='../train/index}'>培训</navigator>
-
-
-
+ <navigator  class="v4 vall"  url='../train/index'>培训</navigator>
 
 <navigator  class="v5 vall" url='../faq/faq'>业务问答</navigator>
 

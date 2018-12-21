@@ -1,0 +1,32 @@
+.list {
+  width: 100%;
+  align-items: center;
+  float: center;
+  display: flex;
+  flex-direction: column;
+  font-size: .9rem;
+}
+.th{
+  border-top: 1px solid palegreen;
+}
+.th, .td {
+  padding: 0.5rem;
+  border-bottom: 1px solid palegreen;
+  border-right: 1px solid palegreen;
+  text-align: center;
+  width: 50%;
+  align-items: center;
+}
+.tdleft {
+    border-left: 1px solid palegreen;
+}
+.tdnumber{
+ font-family:SimHei;
+ font-size: 1rem;
+}
+.tr {
+  display: flex;
+  align-items: center;
+  float: center;
+  width: 90%;
+}

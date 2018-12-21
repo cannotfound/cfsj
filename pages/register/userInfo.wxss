@@ -1,0 +1,8 @@
+.container > view { padding: 8px; text-align: left; }
+.row {
+   float: left;
+   margin-top: 20px;
+   border: 1px solid #aaa;
+   border-radius: 6px;
+   width: 99%;
+}

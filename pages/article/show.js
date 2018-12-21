@@ -1,5 +1,7 @@
 // pages/article/show.js
 const app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -16,11 +18,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      articleid: options.id
-    });
+
     var that = this;
-    var articleid = options.id;
+    var showid = options.id;
+    if (util.isBlank(showid)) { showid = 11; }
+
+    this.setData({
+      articleid: showid,
+    });
+
+    var articleid = showid;
     wx.request({
       url: 'https://wx.gzis.org.cn/dszr/web/index.php/article/showAjax',
       method: 'POST',
@@ -34,6 +41,8 @@ Page({
           edit_date: res.data.article[0].edit_date,
 
         });
+
+        WxParse.wxParse('content', 'html', res.data.article[0].content, that, 25);
       },
     })
   },
