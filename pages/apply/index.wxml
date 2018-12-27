@@ -14,7 +14,7 @@
       <form id='registerForm' bindsubmit="formSubmit" bindreset="formReset" action="https://wx.gzis.org.cn/dszr/web/index.php/index/register">
 
 
-        <view class="section" id="topView">
+        <view class="section topView0" id="topView">
           <view class="section__title">企业名称</view>
           <view class="section_input">
             <input disabled='{{haveRegistered}}' name="org_name" value="{{form.org_name}}" placeholder="点此填写" />
@@ -63,7 +63,7 @@
           </view>
         </view>
 
-        <view class="section_btn" id="bottomView">
+        <view class="section_btn bottomView0" id="bottomView">
           <navigator class="goEdit" url="../register/register?method=view">修改注册资料</navigator>
           <button wx:if="{{haveRegistered}}" bindtap='goStep' id="2" name="btnEdit" class="btnSubmit">已注册, 点击下一步</button>
           <button wx:if="{{!haveRegistered}}" formType="submit" name="btnSubmit" class="btnSubmit">注册</button>
@@ -78,34 +78,62 @@
     <swiper-item>
       <view class="step2">
 
-        <button bindtap='showAccountBtn' class="btnSubmit">查看汇款资料</button>
+        <view class='paylist topView1'>
+          <view class='tr'>
+            <text>
+通过银行汇款至以下帐号：\n
+ 开户名称：中国物品编码中心\n
+ 开户银行：交通银行北京分行和平里支行\n
+ 银行帐号：110060224010149084052\n
+ 收费标准见下表:\n
+</text>
+          </view>
 
-        <button wx:if="{{u_license}}" class="btnReady">营业执照已上传</button>
-        <button wx:else class="btnSubmit" bindtap='uploadBtn' id="1">点击上传营业执照</button>
 
-        <button wx:if='{{u_ticket}}' class="btnReady">汇款凭证已上传</button>
-        <button wx:else class="btnSubmit" bindtap='uploadBtn' id="2">点击上传汇款凭证</button>
+          <view class='tr'>
+            <view class="th tdleft">单位类型</view>
+            <view class="th">申办费用(元）</view>
+          </view>
 
-        <button wx:if="{{u_license && u_ticket}}" class="btnSubmit" bindtap='resetFileBtn' id="99">重新上传</button>
+          <view class='tr' wx:for='{{chargeArray}}' wx:key='index'>
+            <view class="td tdleft">{{index}}</view>
+            <view class="td tdnumber">{{item}}</view>
+          </view>
 
 
+        </view>
+
+        <!-- <button bindtap='showAccountBtn' class="btnSubmit">查看汇款资料</button> -->
+        <view class="step2btnList bottomView1">
+          <button wx:if="{{u_license}}" class="btnReady">营业执照已上传</button>
+          <button wx:else class="btnSubmit" bindtap='uploadBtn' id="1">点击上传营业执照</button>
+
+          <button wx:if='{{u_ticket}}' class="btnReady">汇款凭证已上传</button>
+          <button wx:else class="btnSubmit" bindtap='uploadBtn' id="2">点击上传汇款凭证</button>
+
+          <button wx:if="{{!u_submit}}" class="btnSubmit" bindtap='uploadSubmitTap' id="99">提交</button>
+          <button wx:else class="btnSubmit" id="99">已提交</button>
+          
+          
+        
+        </view> 
+  
       </view>
     </swiper-item>
     <swiper-item>
       <view class="step3">
 
-        <view class="showStatus">
-          <view class="label">营业执照审核：  <text class="accept_status">{{license_accept_status}}</text></view>
-        
-        </view>
+<view class="step3info topView2">
+<text>
+本单位工作人员将于7个工作日内，联系您告知办理情况，请保持手机通畅！
 
-        <view class="showStatus">
-          <view class="label">汇款凭证审核： <text class="accept_status">{{ticket_accept_status}}</text></view>
-         
-        </view>
+</text>
 
-        <view wx:if="{{license_accept_status === '通过' && ticket_accept_status === '通过'}}">
-        <button class="btnSubmit" bindtap='copyToClipTap'>点击复制表格下载链接</button>
+</view>
+ 
+
+        <view>
+          <button class="btnSubmit bottomView2" bindtap='copyToClipTap'>复制表格下载链接</button>
         </view>
 
 

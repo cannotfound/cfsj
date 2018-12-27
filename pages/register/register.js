@@ -129,10 +129,20 @@ Page({
   editUser: function(e){
 
     console.log('form发生了editUser事件，携带数据为：', e);
-    this.setData({
-      showSaveBtn: true,
-      hiddenEditBtn: true,
-    });
+    var usubmit = wx.getStorageSync('u_submit');
+    if(usubmit){
+      wx.showModal({
+        title: '警告',
+        content: '新办申请单尚未完成，不允许修改资料！',
+        showCancel: false,
+      })
+    }else{
+      this.setData({
+        showSaveBtn: true,
+        hiddenEditBtn: true,
+      });
+
+    }
 
   },
 

@@ -1,21 +1,21 @@
 {
   "pages": [
-      "pages/apply/index",
+    "pages/guide/index",
     "pages/index/index",
     "pages/train/sign",
     "pages/register/register",
     "pages/article/article",
     "pages/faq/faq",
     "pages/logs/logs",
-"pages/article/show",
+    "pages/article/show",
     "pages/train/index",
     "pages/train/show",
     "pages/faq/show",
     "pages/webview/gogzis",
     "pages/register/userInfo",
-
+    "pages/apply/index",
     "pages/apply/showAccount",
-    "pages/guide/index"
+    "pages/guide/show"
   ],
   "window": {
     "backgroundTextStyle": "light",

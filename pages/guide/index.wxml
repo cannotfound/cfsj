@@ -1,0 +1,20 @@
+<view class="container">
+
+
+<view id='list'>
+
+<view wx:for="{{list}}" wx:for-index="key" wx:key='value.id'  wx:for-item="value">
+
+<navigator url="show?id={{value.id}}" class="row">
+<view>
+<view class="edit_date">{{value.edit_date}}</view> 
+<view class="title">{{value.title}}</view> 
+<view class="detail">查看指南详情</view> 
+
+</view>
+</navigator>
+</view>
+
+
+</view>
+</view>

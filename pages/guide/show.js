@@ -1,11 +1,17 @@
+// pages/article/show.js
 const app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list: [],
+    title: null,
+    content: null,
+    edit_date: null,
+    gid: null,
   },
 
   /**
@@ -13,50 +19,38 @@ Page({
    */
   onLoad: function (options) {
 
-    wx.showLoading({
-      title: '正在加载',
-      mask: true
+    var that = this;
+    var showid = options.id;
+    if (util.isBlank(showid)) { showid = 11; }
+
+    this.setData({
+      gid: showid,
     });
 
-
-    var openid = wx.getStorageSync('openid');
-    //console.log(openid + "=openid" + "; options.hr=" + options.hr);
-
-
-
-
-
-    var that = this;
+    var gid = showid;
     wx.request({
-      url: 'https://wx.gzis.org.cn/dszr/web/index.php/guide/listAjax',
+      url: 'https://wx.gzis.org.cn/dszr/web/index.php/guide/showAjax',
       method: 'POST',
-      header: {
-        'Content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        sec: app.globalData.secret
-      },
+      header: { 'Content-type': 'application/x-www-form-urlencoded' },
+      data: { gid: gid, sec: app.globalData.secret },
       success: function (res) {
-        var list = res.data.list;
-        console.log(list)
+        //console.log(res);
         that.setData({
-          list: list,
-        })
+          title: res.data.article[0].title,
+          content: res.data.article[0].content,
+          edit_date: res.data.article[0].edit_date,
+
+        });
+
+        WxParse.wxParse('content', 'html', res.data.article[0].content, that, 25);
       },
-      complete: function (res2) {
-        wx.hideLoading();
-      }
     })
-
-
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
-
 
   },
 
@@ -100,13 +94,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  onPageScroll: function (e) {
-    if (e.scrollTop < 0) {
-      wx.pageScrollTo({
-        scrollTop: 0
-      })
-    }
-    e.scroll
   }
 })

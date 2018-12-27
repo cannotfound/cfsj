@@ -4,6 +4,7 @@
 
 .step3 .accept_status{
   font-size: 2rem;
+  color: #33ac3f;
 }
 .step3 > .showStatus{ margin: 1vh 0 3vh 0; border-bottom: 0.02rem solid;}
 
@@ -131,14 +132,50 @@ swiper {
 }
 
 .step2 {
-  position: fixed;
+
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
   width: 90%;
+ 
 }
 
 .step2 > button {
   margin: 3vh 0 3vh 0;
 }
+.paylist{ margin-top: 1rem;}
+.tr {
+  display: flex;
+  align-items: center;
+  float: center;
+  width: 90%;
+  
+}
+.th{
+  border-top: 1px solid palegreen;
+}
+.th, .td {
+  padding: 0.5rem;
+  border-bottom: 1px solid palegreen;
+  border-right: 1px solid palegreen;
+  width: 50%;
+}
+.tdleft {
+    border-left: 1px solid palegreen;
+}
+.step2btnList{ 
+  margin-top: 1rem; width: 100%; 
+
+
+}
+.step2btnList > button { margin: 1rem 0 1rem 0;}
+
+.step3{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem;
+}
+.step3 > view{ width: 90%; } 

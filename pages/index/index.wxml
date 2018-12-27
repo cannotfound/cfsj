@@ -46,7 +46,7 @@
 <view class="v23  v123">
 <navigator  class="v2 vall" url='../article/article'>通知公告</navigator>
 
-  <navigator url="../webview/gogzis" class="v3 vall">办事指南</navigator>
+  <navigator url="../guide/index" class="v3 vall">办事指南</navigator>
   <!-- <web-view src="https://wx.gzis.org.cn/dszr/web/index.php/index/redirect">办事指南</web-view> -->
 </view>
 

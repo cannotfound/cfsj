@@ -24,16 +24,22 @@ Page({
     },
     u_license: false,
     u_ticket: false,
+    u_submit: false,
     license_accept_status: '-',
     ticket_accept_status: '-',
- 
+    chargeArray: {
+      '单个企业': '2600',
+      '集团企业': '3400',
+      '进出口企业': '4200',
+
+    }
 
 
   },
 
   copyToClipTap: function(res){
     wx.setClipboardData({
-      data: 'https://wx.gzis.org.cn/dszr/web/20181204.doc',
+      data: 'https://wx.gzis.org.cn/dszr/web/zhuce_biao.doc',
       success: function(res){
         console.log('复制到剪粘板成功！')
         wx.showModal({
@@ -72,6 +78,8 @@ Page({
     if (step == 1) {}
     if (step == 2) {}
 
+    this.navStep(null, step + 1);
+
     var juser = wx.getStorageSync('juser');
     if (juser.id == null) {
       console.log("meiyou zhuce")
@@ -80,6 +88,8 @@ Page({
         haveRegistered: true
       });
     }
+
+    this.getUploadInfo();
 
   },
 
@@ -98,78 +108,34 @@ Page({
         });
         this.stepOnload(e.target.dataset.current - 1);
       }
-    }
-    if (step != null) {
+    }else if (step != null) {
       this.setData({
         currentStep: step - 1,
       })
       this.stepOnload(step - 1);
     }
 
-    
     wx.pageScrollTo({
       scrollTop: 0,
       duration: 300
     });
   },
   stepOnload: function (gostep){
+
     var that = this;
+    this.resizeSwiperItemHeight(this.data.currentStep);
     if (gostep == 0) {
       console.log("1 step")
+      //this.resizeSwiperItemHeight(this.data.currentStep);
     }
     if (gostep == 1) {
       console.log("2 step")
-      that.setData({
-        u_license: false,
-        u_ticket: false,
-      });
-      wx.request({
-        url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/getUploadInfoAjax',
-        method: 'POST',
-        data: {
-          'sec': app.globalData.secret,
-          'openid': wx.getStorageSync('openid'),
-        },
-        header: { 'Content-type': 'application/x-www-form-urlencoded' },
-        success: function(res){
-          console.log(res)
-
-          if( !util.isBlank(res.data)){
-
-            that.setData({
-              u_license: res.data.license,
-              u_ticket: res.data.ticket,
-            });
-          }
-
-
-        }
-      })
-
-
+      that.getUploadInfo();
     }
     if (gostep == 2) {
       console.log("3 step")
-      wx.request({
-        url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/getAcceptStatusAjax',
-        method: 'POST',
-        data: {
-          'sec': app.globalData.secret,
-          'openid': wx.getStorageSync('openid'),
-        },
-        header: { 'Content-type': 'application/x-www-form-urlencoded' },
-        success: function(res){
-          console.log(res.data.license_status)
-          that.setData({
-            license_accept_status: res.data.license_status,
-            ticket_accept_status: res.data.ticket_status,
-
-          });
-
-        },
-        
-      })
     }
+
   },
   goStep: function(e) {
     //console.log(e)
@@ -193,7 +159,7 @@ Page({
 
         console.log(res)
         const tempFilePaths = res.tempFilePaths;
-        wx.uploadFile({
+        const uploadTask = wx.uploadFile({
           url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/uploadAjax', //此处换上你的接口地址
           filePath: tempFilePaths[0],
           name: 'img',
@@ -213,19 +179,83 @@ Page({
             var data = JSON.parse(res.data);
             console.log(data);
             if (data.status=='success'){
-            that.stepOnload(1);}
+                that.stepOnload(1);
+            }else{
+              wx.shot
+            }
           },
           fail: function(res) {
             console.log('fail:' + JSON.stringify(res));
-
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none',
+              duration: 2000
+            })  
           },
 
         });
 
+        wx.showLoading({
+          title: '正在上传, 请不要退出',
+        });
+
+        uploadTask.onProgressUpdate((res) => {
+          console.log('上传进度', res.progress)
+          console.log('已经上传的数据长度', res.totalBytesSent)
+          console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+
+          if(res.progress == 100){
+            wx.hideLoading();
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })     
+          }
+
+        })
+
       }
     })
   },
+  getUploadInfo: function(e){
 
+    var that = this;
+    that.setData({
+      u_license: false,
+      u_ticket: false,
+    });
+    wx.setStorageSync('u_submit', false);
+    wx.request({
+      url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/getUploadInfoAjax',
+      method: 'POST',
+      data: {
+        'sec': app.globalData.secret,
+        'openid': wx.getStorageSync('openid'),
+      },
+      header: { 'Content-type': 'application/x-www-form-urlencoded' },
+      success: function (res) {
+        console.log(res)
+
+        if (!util.isBlank(res.data)) {
+
+          that.setData({
+            u_license: res.data.license,
+            u_ticket: res.data.ticket,
+          });
+          if (res.data.license == 2 && res.data.ticket == 2) {
+            that.setData({
+              u_submit: true
+            });
+            wx.setStorageSync('u_submit', true);
+          }
+        }
+      },
+      complete: function (res2) {
+        that.resizeSwiperItemHeight(that.data.currentStep);
+      }
+    })
+  },
   resetFileBtn: function(e){
     var that = this;
     wx.request({
@@ -252,25 +282,35 @@ Page({
    */
   onReady: function() {
 
+ 
+
+  },
+
+  resizeSwiperItemHeight: function(step){
+
+
+    var selectClassB = '.bottomView' + step;
+    var selectClassT = '.topView' + step;
+
     var query = wx.createSelectorQuery();
     var that = this;
     var bottomB, topviewT;
 
-    query.select('#bottomView').boundingClientRect();
-    query.selectViewport().scrollOffset();
-    query.exec(function(res) {
-      //console.log("query=" + JSON.stringify( res));
+    query.select(selectClassB).boundingClientRect();
+    //query.selectViewport();//.scrollOffset();
+    query.exec(function (res) {
+      //console.log(step + "query=" + JSON.stringify( res));
       bottomB = res[0].bottom;
 
       var query2 = wx.createSelectorQuery();
-      query2.select('#topView').boundingClientRect();
-      query2.selectViewport().scrollOffset();
-      query2.exec(function(res2) {
-        //console.log("query=" + JSON.stringify(res2));
+      query2.select(selectClassT).boundingClientRect();
+      //query2.selectViewport();//.scrollOffset();
+      query2.exec(function (res2) {
+        //console.log(step + "query=" + JSON.stringify(res2));
         topviewT = res2[0].top;
 
         var swiperH = bottomB - topviewT + 20;
-        //console.log(swiperH + "px");
+        console.log('resize ' + swiperH + "px");
 
         that.setData({
           swiperHeight: swiperH,
@@ -278,12 +318,7 @@ Page({
       });
 
     });
-
-
-
-
   },
-
   formSubmit: function(e) {
     //console.log('form发生了submit事件，携带数据为：', e.detail.value);
     const params = e.detail.value;
@@ -340,6 +375,31 @@ Page({
     }
   },
 
+  uploadSubmitTap: function(e){
+
+    //console.log(e)
+    var that = this;
+    var juser = wx.getStorageSync('juser');
+    wx.request({
+      url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/uploadSubmitAjax',
+      method: 'POST',
+      data: {
+        'sec': app.globalData.secret,
+        'userid': juser.id,
+      },
+      header: { 'Content-type': 'application/x-www-form-urlencoded' },
+      success: function(res){
+        if(res.data == 'OK'){
+          console.log('upload file submit success.')
+          that.setData({
+            u_submit: true
+          });
+        }
+
+      }
+    })
+
+  },
   /**
    * 生命周期函数--监听页面显示
    */
