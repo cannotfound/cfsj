@@ -96,6 +96,11 @@ function getRegisterInfo(page){
 
       if (!res.data.org_name) {
         console.log('真可怕！它没有绑定法人');
+        wx.removeStorageSync('juser');
+        that.setData({
+          register_org_name: '',
+          haveRegistered: false,
+        });
       } else {
 
         wx.setStorageSync('juser', res.data);

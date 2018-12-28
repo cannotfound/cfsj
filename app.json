@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/guide/index",
+    
     "pages/index/index",
     "pages/train/sign",
     "pages/register/register",
@@ -15,6 +15,7 @@
     "pages/register/userInfo",
     "pages/apply/index",
     "pages/apply/showAccount",
+    "pages/guide/index",
     "pages/guide/show"
   ],
   "window": {

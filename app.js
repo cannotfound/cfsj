@@ -45,5 +45,6 @@ App({
     secret: '97Hi',
     filetype_license: 1,//营业执照
     filetype_ticket: 2, // 汇款凭证
+    upload_max_size: 10, // M
   }
 })

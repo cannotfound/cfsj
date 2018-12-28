@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentStep: 0,
+    currentStep: 1,
     swiperHeight: 100,
     haveRegistered: false,
     form: {
@@ -37,10 +37,20 @@ Page({
 
   },
 
-  copyToClipTap: function(res){
+  copyToClipTap: function(res) {
+
+    if (!this.data.u_submit) {
+      wx.showModal({
+        title: '提示',
+        content: '请先在第二步提交上传资料',
+        showCancel: false,
+      })
+      return;
+    }
+
     wx.setClipboardData({
       data: 'https://wx.gzis.org.cn/dszr/web/zhuce_biao.doc',
-      success: function(res){
+      success: function(res) {
         console.log('复制到剪粘板成功！')
         wx.showModal({
           title: '提示',
@@ -56,63 +66,42 @@ Page({
   onLoad: function(options) {
 
 
-    var juser = wx.getStorageSync('juser');
-    //console.log(util.isBlank(juser))
-    if (!util.isBlank(juser)) {
-      this.setData({
-
-        form: juser
-      })
-    }
-
     var step = options.step;
-    if (options.step == null) step = 0;
+    if (options.step == null) step = 1;
 
     this.setData({
       currentStep: step,
     })
 
-    if (step == 0) {
+    if (step == 1) {
       util.initValidate(this);
     }
-    if (step == 1) {}
     if (step == 2) {}
-
-    this.navStep(null, step + 1);
-
-    var juser = wx.getStorageSync('juser');
-    if (juser.id == null) {
-      console.log("meiyou zhuce")
-    } else {
-      this.setData({
-        haveRegistered: true
-      });
-    }
-
-    this.getUploadInfo();
+    if (step == 3) {}
 
   },
 
   navStep: function(e, step) {
-    //console.log(e + "====" + step)
- 
+    console.log(e)
+
     if (e != null) {
+      //touch来的swiper-item ID从0开始
       if (e.detail.source == 'touch') {
         this.setData({
-          currentStep: e.detail.current
+          currentStep: e.detail.current + 1
         });
-        this.stepOnload(e.detail.current);
+        this.stepOnload(e.detail.current + 1);
       } else if (e.detail.source == null) {
         this.setData({
-          currentStep: e.target.dataset.current - 1,
+          currentStep: e.target.dataset.current,
         });
-        this.stepOnload(e.target.dataset.current - 1);
+        this.stepOnload(e.target.dataset.current);
       }
-    }else if (step != null) {
+    } else if (step != null) {
       this.setData({
-        currentStep: step - 1,
+        currentStep: step,
       })
-      this.stepOnload(step - 1);
+      this.stepOnload(step);
     }
 
     wx.pageScrollTo({
@@ -120,19 +109,19 @@ Page({
       duration: 300
     });
   },
-  stepOnload: function (gostep){
+  stepOnload: function(gostep) {
 
     var that = this;
     this.resizeSwiperItemHeight(this.data.currentStep);
-    if (gostep == 0) {
+    if (gostep == 1) {
       console.log("1 step")
       //this.resizeSwiperItemHeight(this.data.currentStep);
     }
-    if (gostep == 1) {
+    if (gostep == 2) {
       console.log("2 step")
       that.getUploadInfo();
     }
-    if (gostep == 2) {
+    if (gostep == 3) {
       console.log("3 step")
     }
 
@@ -142,34 +131,51 @@ Page({
     this.navStep(null, e.target.id);
 
   },
-  showAccountBtn: function(e){
+  showAccountBtn: function(e) {
     wx.navigateTo({
       url: 'showAccount'
     })
   },
   uploadBtn: function(e) {
 
+    if (!this.data.haveRegistered) {
+      wx.showModal({
+        title: '提示',
+        content: '请先注册',
+        showCancel: false,
+      })
+      return;
+    }
     var that = this;
     var filetype = e.currentTarget.id;
     wx.chooseImage({
       count: 1,
       sourceType: ['album'],
-      sizeType: ['original', 'compressed'],
+      sizeType: ['original'],
       success: function(res) {
 
         console.log(res)
         const tempFilePaths = res.tempFilePaths;
+        var filesize = res.tempFiles[0].size;
+        filesize = filesize / 1024 / 1024;
+
+        if (filesize >= app.globalData.upload_max_size) {
+          wx.showModal({
+            title: '警告',
+            content: '上传文件最大不能超过' + app.globalData.upload_max_size + "M",
+          })
+          return;
+        }
         const uploadTask = wx.uploadFile({
-          url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/uploadAjax', //此处换上你的接口地址
+          url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/uploadAjax',
           filePath: tempFilePaths[0],
           name: 'img',
           header: {
             "Content-Type": "multipart/form-data;charset=utf-8",
             'accept': 'application/json',
-            'Authorization': 'Bearer ..' //若有token，此处换上你的token，没有的话省略
           },
           formData: {
-            'user': 'test-user', //其他额外的formdata，可不写
+            'user': 'test-user',
             'sec': app.globalData.secret,
             'openid': wx.getStorageSync('openid'),
             'file_type': filetype,
@@ -177,11 +183,20 @@ Page({
           method: 'POST',
           success: function(res) {
             var data = JSON.parse(res.data);
-            console.log(data);
-            if (data.status=='success'){
-                that.stepOnload(1);
-            }else{
-              wx.shot
+            console.log(res);
+            if (data.status == 'success') {
+              wx.showToast({
+                title: '上传成功',
+                icon: 'success',
+                duration: 2000
+              })
+              that.stepOnload(1);
+            } else {
+              console.log('wx.uploadFile status 不是success!!!')
+              wx.showModal({
+                title: '警告',
+                content: data.msg,
+              })
             }
           },
           fail: function(res) {
@@ -190,13 +205,13 @@ Page({
               title: '上传失败',
               icon: 'none',
               duration: 2000
-            })  
+            })
           },
 
         });
 
         wx.showLoading({
-          title: '正在上传, 请不要退出',
+          title: '正在上传',
         });
 
         uploadTask.onProgressUpdate((res) => {
@@ -204,13 +219,9 @@ Page({
           console.log('已经上传的数据长度', res.totalBytesSent)
           console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
 
-          if(res.progress == 100){
+          if (res.progress == 100) {
             wx.hideLoading();
-            wx.showToast({
-              title: '上传成功',
-              icon: 'success',
-              duration: 2000
-            })     
+
           }
 
         })
@@ -218,7 +229,7 @@ Page({
       }
     })
   },
-  getUploadInfo: function(e){
+  getUploadInfo: function(e) {
 
     var that = this;
     that.setData({
@@ -233,8 +244,10 @@ Page({
         'sec': app.globalData.secret,
         'openid': wx.getStorageSync('openid'),
       },
-      header: { 'Content-type': 'application/x-www-form-urlencoded' },
-      success: function (res) {
+      header: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
         console.log(res)
 
         if (!util.isBlank(res.data)) {
@@ -251,12 +264,12 @@ Page({
           }
         }
       },
-      complete: function (res2) {
+      complete: function(res2) {
         that.resizeSwiperItemHeight(that.data.currentStep);
       }
     })
   },
-  resetFileBtn: function(e){
+  resetFileBtn: function(e) {
     var that = this;
     wx.request({
       url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/uploadResetAjax',
@@ -265,12 +278,14 @@ Page({
         'sec': app.globalData.secret,
         'openid': wx.getStorageSync('openid'),
       },
-      header: { 'Content-type': 'application/x-www-form-urlencoded' },
-      success: function(res){
+      header: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
         console.log(res)
-        if(res.data == 'OK'){
+        if (res.data == 'OK') {
           that.stepOnload(1);
-        }     
+        }
       }
     })
 
@@ -282,30 +297,67 @@ Page({
    */
   onReady: function() {
 
- 
+    var juser = wx.getStorageSync('juser');
+    if (!util.isBlank(juser)) {
+      if (juser.id == null) {
+        console.log("meiyou zhuce")
+      } else {
+        this.setData({
+          haveRegistered: true,
+          form: juser
+        });
+      }
+    }
+
+    var step = this.data.currentStep;
+    this.navStep(null, step);
+
+    this.getUploadInfo();
+
 
   },
 
-  resizeSwiperItemHeight: function(step){
+  resizeSwiperItemHeight: function(step) {
+    //swiper中的写定单位rem
+    var that = this;
+    var height = 30;
+    if (step == 1) {
+      height = 30;
+      if(that.data.haveRegistered){
+        height = 34;
+      }
+    }
+    if(step == 2){
+      height = 50;
+    }
+    if(step == 3){
+      height = 20;
+    }
+
+
+    that.setData({
+      swiperHeight: height,
+    });
+    return;
+
 
 
     var selectClassB = '.bottomView' + step;
     var selectClassT = '.topView' + step;
 
     var query = wx.createSelectorQuery();
-    var that = this;
     var bottomB, topviewT;
 
     query.select(selectClassB).boundingClientRect();
-    //query.selectViewport();//.scrollOffset();
-    query.exec(function (res) {
+    query.selectViewport(); //.scrollOffset();
+    query.exec(function(res) {
       //console.log(step + "query=" + JSON.stringify( res));
       bottomB = res[0].bottom;
 
       var query2 = wx.createSelectorQuery();
       query2.select(selectClassT).boundingClientRect();
       //query2.selectViewport();//.scrollOffset();
-      query2.exec(function (res2) {
+      query2.exec(function(res2) {
         //console.log(step + "query=" + JSON.stringify(res2));
         topviewT = res2[0].top;
 
@@ -361,6 +413,8 @@ Page({
             content: res2.data.msg,
             showCancel: false,
             complete: function() {
+
+              //wx.setStorageSync('has_registered', true);
               wx.redirectTo({
                 url: 'index?step=1',
               })
@@ -375,8 +429,24 @@ Page({
     }
   },
 
-  uploadSubmitTap: function(e){
+  uploadSubmitTap: function(e) {
 
+    if (!this.data.haveRegistered) {
+      wx.showModal({
+        title: '提示',
+        content: '请先注册',
+        showCancel: false,
+      })
+      return;
+    }
+    if (this.data.u_license && this.data.u_ticket) {} else {
+      wx.showModal({
+        title: '提示',
+        content: '请先上传执照和汇款凭证',
+        showCancel: false,
+      })
+      return;
+    }
     //console.log(e)
     var that = this;
     var juser = wx.getStorageSync('juser');
@@ -387,9 +457,11 @@ Page({
         'sec': app.globalData.secret,
         'userid': juser.id,
       },
-      header: { 'Content-type': 'application/x-www-form-urlencoded' },
-      success: function(res){
-        if(res.data == 'OK'){
+      header: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        if (res.data == 'OK') {
           console.log('upload file submit success.')
           that.setData({
             u_submit: true

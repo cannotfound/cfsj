@@ -1,12 +1,12 @@
 <view class='container'>
 
   <view class="list">
-    <view class="title {{currentStep == 0 ? 'current' : ''}}" bindtap='navStep' data-current="1">①注册</view>
-    <view class="title {{currentStep == 1 ? 'current' : ''}}" bindtap='navStep' data-current="2">②上传资料</view>
-    <view class="title {{currentStep == 2 ? 'current' : ''}}" bindtap='navStep' data-current="3">③下载表格</view>
+    <view class="title {{currentStep == 1 ? 'current' : ''}}" bindtap='navStep' data-current="1">①注册</view>
+    <view class="title {{currentStep == 2 ? 'current' : ''}}" bindtap='navStep' data-current="2">②上传资料</view>
+    <view class="title {{currentStep == 3 ? 'current' : ''}}" bindtap='navStep' data-current="3">③下载表格</view>
   </view>
 
-  <swiper bindchange='navStep' current='{{currentStep}}' class='box' style="height:{{swiperHeight}}px">
+  <swiper bindchange='navStep' current='{{currentStep-1}}' class='box' style="height:{{swiperHeight}}rem">
 
     <swiper-item id='registerItem' style="height:80%;">
 
@@ -14,7 +14,7 @@
       <form id='registerForm' bindsubmit="formSubmit" bindreset="formReset" action="https://wx.gzis.org.cn/dszr/web/index.php/index/register">
 
 
-        <view class="section topView0" id="topView">
+        <view class="section topView1" id="topView">
           <view class="section__title">企业名称</view>
           <view class="section_input">
             <input disabled='{{haveRegistered}}' name="org_name" value="{{form.org_name}}" placeholder="点此填写" />
@@ -63,8 +63,8 @@
           </view>
         </view>
 
-        <view class="section_btn bottomView0" id="bottomView">
-          <navigator class="goEdit" url="../register/register?method=view">修改注册资料</navigator>
+        <view class="section_btn bottomView1" id="bottomView">
+          <navigator wx:if='{{haveRegistered}}' class="goEdit" url="../register/register?method=view">修改注册资料</navigator>
           <button wx:if="{{haveRegistered}}" bindtap='goStep' id="2" name="btnEdit" class="btnSubmit">已注册, 点击下一步</button>
           <button wx:if="{{!haveRegistered}}" formType="submit" name="btnSubmit" class="btnSubmit">注册</button>
         </view>
@@ -78,7 +78,7 @@
     <swiper-item>
       <view class="step2">
 
-        <view class='paylist topView1'>
+        <view class='paylist topView2'>
           <view class='tr'>
             <text>
 通过银行汇款至以下帐号：\n
@@ -103,8 +103,12 @@
 
         </view>
 
+        <view class='uploadTip'>
+        上传文件格式：jpg, png, jpeg, pdf；
+        文件大小： 10M 以下；
+        </view>
         <!-- <button bindtap='showAccountBtn' class="btnSubmit">查看汇款资料</button> -->
-        <view class="step2btnList bottomView1">
+        <view class="step2btnList bottomView2">
           <button wx:if="{{u_license}}" class="btnReady">营业执照已上传</button>
           <button wx:else class="btnSubmit" bindtap='uploadBtn' id="1">点击上传营业执照</button>
 
@@ -123,7 +127,7 @@
     <swiper-item>
       <view class="step3">
 
-<view class="step3info topView2">
+<view class="step3info topView3">
 <text>
 本单位工作人员将于7个工作日内，联系您告知办理情况，请保持手机通畅！
 
@@ -133,7 +137,7 @@
  
 
         <view>
-          <button class="btnSubmit bottomView2" bindtap='copyToClipTap'>复制表格下载链接</button>
+          <button class="btnSubmit bottomView3" bindtap='copyToClipTap'>复制表格下载链接</button>
         </view>
 
 

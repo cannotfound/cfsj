@@ -24,11 +24,13 @@
     </block>-->
 
     <view>
+    <text class="register_org_name">欢迎您来到广州条码</text>
+    <!-- 
   <navigator url="../register/register" class="register_org_name" wx:if="{{!haveRegistered}}">暂未绑定法人</navigator>
   
  <block wx:else>
   <navigator url="../register/register?method=view" class="register_org_name">{{register_org_name}}</navigator>
-    </block>
+    </block>-->
   </view>
   </view>
 
