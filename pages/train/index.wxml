@@ -3,7 +3,8 @@
 
   <view  class='tlist'>
   <label>{{lesson_fullname}}已经报名的培训：</label>
-    <view wx:for="{{tlist}}" wx:for-index="key" wx:key='tv.id'  wx:for-item="tv">
+    <view wx:if='{{tlist.length==0}}'>暂无</view>
+    <view   wx:for="{{tlist}}" wx:for-index="key" wx:key='tv.id'  wx:for-item="tv">
     <label>{{tv.Lesson.title}}</label>
     </view>
   </view>

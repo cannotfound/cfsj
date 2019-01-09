@@ -24,7 +24,7 @@
     </block>-->
 
     <view>
-    <text class="register_org_name">欢迎您来到广州条码</text>
+    <text class="register_org_name">中国物品编码中心</text>
     <!-- 
   <navigator url="../register/register" class="register_org_name" wx:if="{{!haveRegistered}}">暂未绑定法人</navigator>
   
@@ -41,22 +41,36 @@
 <view class="list" >
 
 <!-- <image class="hp_img" src="/images/banli.png" style="width: 64px; height: 64px; background-color: #FFF;"></image>-->
-<navigator class="v1 vall v123" url='../apply/index'>新办业务</navigator>
-
-
-
-<view class="v23  v123">
-<navigator  class="v2 vall" url='../article/article'>通知公告</navigator>
-
-  <navigator url="../guide/index" class="v3 vall">办事指南</navigator>
-  <!-- <web-view src="https://wx.gzis.org.cn/dszr/web/index.php/index/redirect">办事指南</web-view> -->
+<view class='v1 vall' bindtap='btXinban'>
+<view><image  src="/images/xinban.png"></image></view>
+<view><text>条码新办</text></view>
 </view>
 
 
- <navigator  class="v4 vall"  url='../train/index'>培训</navigator>
+<view class="v23  v123">
 
-<navigator  class="v5 vall" url='../faq/faq'>业务问答</navigator>
+<view class='v2 vall' bindtap='btTongzhi'> 
+<view><image  src="/images/tongzhi.png"></image></view>
+<view><text>通知公告</text></view>
+</view>
 
+<view class='v3 vall' bindtap='btZhinan'>
+<view><image  src="/images/zhinan.png"></image></view>
+<view><text>办事指南</text></view>
+  <!-- <web-view src="https://wx.gzis.org.cn/dszr/web/index.php/index/redirect">办事指南</web-view> -->
+</view>
+
+</view>
+
+<view class="v4 vall" bindtap='btPeixun'>
+<view><image  src="/images/peixun.png"></image></view>
+<view><text>培训报名</text></view>
+</view>
+
+<view class="v5 vall" bindtap='btFaq'>
+<view><image  src="/images/faq.png"></image></view>
+<view><text>业务问答</text></view>
+</view>
 
 </view>
 
