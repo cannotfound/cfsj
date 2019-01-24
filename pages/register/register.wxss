@@ -53,3 +53,10 @@
   background-color: #33ac3f;
   color: #fff;
 }
+.deleteUser{
+  color: cornflowerblue;
+  font-size: 14px;
+  float: center;
+  padding-top: 2rem;
+  text-align: center;
+}

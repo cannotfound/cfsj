@@ -173,3 +173,10 @@ swiper {
 }
 .step3 > view{ width: 90%; } 
 .uploadTip{ font-size: 0.7rem; margin-top: 1rem; }
+.deleteUser{
+  color: cornflowerblue;
+  font-size: 14px;
+  float: center;
+  padding-top: 2rem;
+  text-align: center;
+}

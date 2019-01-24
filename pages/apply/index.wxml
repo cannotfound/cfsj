@@ -64,9 +64,12 @@
         </view>
 
         <view class="section_btn bottomView1" id="bottomView">
-          <navigator wx:if='{{haveRegistered}}' class="goEdit" url="../register/register?method=view">修改注册资料</navigator>
-          <button wx:if="{{haveRegistered}}" bindtap='goStep' id="2" name="btnEdit" class="btnSubmit">已注册, 点击下一步</button>
+          <navigator wx:if='{{haveRegistered && !u_submit}}' class="goEdit" url="../register/register?method=view">修改注册资料</navigator>
+          <button wx:if="{{haveRegistered && !u_submit}}" bindtap='goStep' id="2" name="btnEdit" class="btnSubmit">已注册, 点击下一步</button>
           <button wx:if="{{!haveRegistered}}" formType="submit" name="btnSubmit" class="btnSubmit">注册</button>
+
+             <view  wx:if="{{haveRegistered}}" bindtap="deleteUser" name="btnDelete" class="deleteUser">注销</view>
+
         </view>
 
 
@@ -81,7 +84,7 @@
         <view class='paylist topView2'>
           <view class='tr'>
             <text>
-通过银行汇款至以下帐号：\n
+请通过银行汇款至以下账号，并将贵企业营业执照和汇款凭证上传。\n
  开户名称：中国物品编码中心\n
  开户银行：交通银行北京分行和平里支行\n
  银行帐号：110060224010149084052\n
@@ -104,42 +107,49 @@
         </view>
 
         <view class='uploadTip'>
-        上传文件格式：jpg, png, jpeg, pdf；
-        文件大小： 10M 以下；
+          上传文件格式：jpg, png, jpeg, pdf； 文件大小： 10M 以下；
         </view>
         <!-- <button bindtap='showAccountBtn' class="btnSubmit">查看汇款资料</button> -->
         <view class="step2btnList bottomView2">
-          <button wx:if="{{u_license}}" class="btnReady">营业执照已上传</button>
+          <button wx:if="{{u_license}}" bindtap='btViewLicense' class="btnReady">营业执照已上传,点击可预览</button>
           <button wx:else class="btnSubmit" bindtap='uploadBtn' id="1">点击上传营业执照</button>
 
-          <button wx:if='{{u_ticket}}' class="btnReady">汇款凭证已上传</button>
+          <button wx:if='{{u_ticket}}' bindtap='btViewTicket' class="btnReady">汇款凭证已上传,点击可预览</button>
           <button wx:else class="btnSubmit" bindtap='uploadBtn' id="2">点击上传汇款凭证</button>
 
           <button wx:if="{{!u_submit}}" class="btnSubmit" bindtap='uploadSubmitTap' id="99">提交</button>
-          <button wx:else class="btnSubmit" id="99">已提交</button>
-          
-          
-        
-        </view> 
-  
+          <!-- <button wx:else class="btnSubmit" bindtap='stepto3' id="99">已提交</button> -->
+
+
+
+        </view>
+
       </view>
     </swiper-item>
     <swiper-item>
       <view class="step3">
 
-<view class="step3info topView3">
-<text>
-本单位工作人员将于7个工作日内，联系您告知办理情况，请保持手机通畅！
-
+        <view class="step3info topView3">
+          <text>
+您的资料已提交完毕，新办审核时间约7-10个工作日，审核通过后将发送短信到您的手机，请下载以下链接表格填写盖章，在收到短信后，携带表格并按短信提示领取证书。\n
+表格下载链接:\n
 </text>
 
-</view>
- 
+        </view>
 
         <view>
           <button class="btnSubmit bottomView3" bindtap='copyToClipTap'>复制表格下载链接</button>
         </view>
 
+        <view>
+        <text>
+备注：如审核过程中遇到资料不全等问题，可能会有我中心工作人员联系您，请您保持手机畅通。\n
+关于办理过程遇到的问题，您也可以联系我们：\n
+中国物品编码中心广州分中心\n
+广州市越秀区八旗二马路38号3号楼1楼办证大厅\n
+联系电话：020-83228634、83228628、83228627\n
+</text>
+</view>
 
       </view>
 

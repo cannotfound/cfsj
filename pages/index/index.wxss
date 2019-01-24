@@ -65,7 +65,7 @@ navigator {
   background-repeat: no-repeat;
   border: none;
   margin: 0 0 20px 0px;
-  height: 25%;
+  height: 25vh;
 }
 .top_img image, .top_img > swiper , .top_img navigator{
   width: 100%;

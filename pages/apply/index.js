@@ -65,9 +65,21 @@ Page({
    */
   onLoad: function(options) {
 
+    var juser = wx.getStorageSync('juser');
+
+    if(util.isBlank(juser)){
+      console.log('没有注册信息------APPLY');
+      this.setData({
+        u_license: false,
+        u_ticket: false,
+        u_submit: false,
+      });
+    }
 
     var step = options.step;
+    var hasSubmit = wx.getStorageSync('u_submit');
     if (options.step == null) step = 1;
+    if (hasSubmit) step = 3;//如果已经提交，打开新办直接到第三步
 
     this.setData({
       currentStep: step,
@@ -190,7 +202,7 @@ Page({
                 icon: 'success',
                 duration: 2000
               })
-              that.stepOnload(1);
+              that.stepOnload(2);
             } else {
               console.log('wx.uploadFile status 不是success!!!')
               wx.showModal({
@@ -229,6 +241,54 @@ Page({
       }
     })
   },
+
+  deleteUser: function (e) {
+
+
+    wx.showModal({
+      title: '警告',
+      content: '确定注销？',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+
+          wx.request({
+            url: 'https://wx.gzis.org.cn/dszr/web/index.php/index/deleteUserAjax',
+            method: "POST",
+            data: {
+              openid: wx.getStorageSync('openid'),
+              sec: app.globalData.secret
+            },
+            header: {
+              'Content-type': 'application/x-www-form-urlencoded'
+            },
+            success: function (res) {
+              console.log(res)
+              wx.clearStorageSync();
+              wx.showModal({
+                title: '提示',
+                content: res.data.msg,
+                showCancel: false,
+                complete: function () {
+                  wx.reLaunch({
+                    url: '../index/index',
+                  })
+                }
+              })
+
+            },
+            fail: function (ex) {
+              console.log(ex.errMsg + " : delete user ajax");
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+
+  },
+
   getUploadInfo: function(e) {
 
     var that = this;
@@ -237,12 +297,15 @@ Page({
       u_ticket: false,
     });
     wx.setStorageSync('u_submit', false);
+    var juser = wx.getStorageSync('juser');
+    if(juser == null) return;
+    var userid = juser.id;
     wx.request({
       url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/getUploadInfoAjax',
       method: 'POST',
       data: {
         'sec': app.globalData.secret,
-        'openid': wx.getStorageSync('openid'),
+        'uid': userid,
       },
       header: {
         'Content-type': 'application/x-www-form-urlencoded'
@@ -291,6 +354,63 @@ Page({
 
 
   },
+  viewUploadImg: function(type){
+
+    var juser = wx.getStorageSync('juser');
+    var userid = juser.id;
+    wx.request({
+      url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/GetDlUrlAjax',
+      method: 'POST',
+      data: {
+        'sec': app.globalData.secret,
+        'user_id': userid,
+        'file_type': type,
+      },
+      header: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.status == 'ok') {
+          //downloadwuAjaxAction
+          var furl = res.data.url + '&uid=' + userid;
+          wx.downloadFile({
+            url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/' + furl,
+            success(res) {
+
+              console.log(res)
+              if (res.statusCode === 200) {
+
+                wx.saveFile({
+                  tempFilePath: res.tempFilePath,
+                  success: function (res) {
+                    console.log(res)
+                    wx.previewImage({
+                      urls: [res.savedFilePath],
+                    })
+                  }
+                })
+              }
+            },
+            complete(res){
+              wx.hideLoading();
+            }
+          });
+        }
+      }
+    });
+  },
+  btViewLicense: function (e) {
+
+    wx.showLoading({
+      title: '正在预览...',
+    });
+    this.viewUploadImg(1);
+
+   },
+  btViewTicket: function (e) { 
+    this.viewUploadImg(2);
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -331,7 +451,7 @@ Page({
       height = 50;
     }
     if(step == 3){
-      height = 20;
+      height = 40;
     }
 
 
@@ -428,7 +548,9 @@ Page({
       })
     }
   },
-
+  stepto3: function(e){
+    this.navStep(null, 3);
+  },
   uploadSubmitTap: function(e) {
 
     if (!this.data.haveRegistered) {
@@ -466,6 +588,7 @@ Page({
           that.setData({
             u_submit: true
           });
+          wx.setStorageSync('u_submit', true);
         }
 
       }

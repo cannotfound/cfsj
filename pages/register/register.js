@@ -148,34 +148,50 @@ Page({
 
   deleteUser: function(e){
 
-    wx.request({
-      url: 'https://wx.gzis.org.cn/dszr/web/index.php/index/deleteUserAjax',
-      method: "POST",
-      data: {
-        openid: wx.getStorageSync('openid'),
-        sec: app.globalData.secret
-      },
-      header: {
-        'Content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        console.log(res)
-        wx.showModal({
-          title: '提示',
-          content: res.data.msg,
-          showCancel: false,
-          complete: function () {
-            wx.redirectTo({
-              url: '../index/index',
-            })
-          }
-        })
 
-      },
-      fail: function (ex) {
-        console.log(ex.errMsg + " : delete user ajax");
+    wx.showModal({
+      title: '警告',
+      content: '确定注销？',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+
+          wx.request({
+            url: 'https://wx.gzis.org.cn/dszr/web/index.php/index/deleteUserAjax',
+            method: "POST",
+            data: {
+              openid: wx.getStorageSync('openid'),
+              sec: app.globalData.secret
+            },
+            header: {
+              'Content-type': 'application/x-www-form-urlencoded'
+            },
+            success: function (res) {
+              console.log(res);
+              wx.clearStorageSync();
+              wx.showModal({
+                title: '提示',
+                content: res.data.msg,
+                showCancel: false,
+                complete: function () {
+                  wx.reLaunch({
+                    url: '../index/index',
+                  })
+                }
+              });
+             
+
+            },
+            fail: function (ex) {
+              console.log(ex.errMsg + " : delete user ajax");
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
     })
+
   },
 
   formSubmit: function (e) {
@@ -216,8 +232,9 @@ Page({
             content: res2.data.msg,
             showCancel: false,
             complete: function(){
-              wx.redirectTo({
-               url: '../index/index',
+ 
+              wx.reLaunch({
+                url: '../apply/index?step=2',
               })
             }
           })

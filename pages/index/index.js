@@ -14,18 +14,32 @@ Page({
     haveRegistered: false,
     wxopenid: null,
     imgUrls: [{
-        id: 1,
-        url: 'https://wx.gzis.org.cn/topimg1.jpg',
-      },
-      {
-        id: 2,
-        url: 'https://wx.gzis.org.cn/topimg2.jpg',
-      },
-      {
-        id: 3,
-        url: 'https://wx.gzis.org.cn/topimg3.jpg'
-      }
-    ]
+      id: 1,
+      url: 'https://wx.gzis.org.cn/topimg1.jpg',
+    },
+    {
+      id: 2,
+      url: 'https://wx.gzis.org.cn/topimg2.jpg',
+    },
+    {
+      id: 3,
+      url: 'https://wx.gzis.org.cn/topimg3.jpg'
+    }
+    ],
+    imgUrls2: [{
+      id: 1,
+      url: 'https://wx.gzis.org.cn/dszr/web/images/topshow/t1b.jpg',
+    },
+    {
+      id: 2,
+      url: 'https://wx.gzis.org.cn/dszr/web/images/topshow/t2b.jpg',
+    },
+    {
+      id: 3,
+      url: 'https://wx.gzis.org.cn/dszr/web/images/topshow/t3b.jpg'
+    }
+    ],
+
   },
   //事件处理函数
   bindViewTap: function() {

@@ -12,17 +12,17 @@
 <form  bindsubmit="formSubmit" bindreset="formReset" action="https://wx.gzis.org.cn/dszr/web/index.php/index/register">
   <view class="section">
     <view class="section__title">企业名称</view>
-    <view class="section_input"><input  disabled="{{showInfo}}" name="org_name" value="{{form.org_name}}" placeholder="点此填写" /></view>
+    <view class="section_input"><input  disabled="{{!showSaveBtn}}" name="org_name" value="{{form.org_name}}" placeholder="点此填写" /></view>
   </view>
 
     <view class="section">
     <view class="section__title">法人</view>
-    <view class="section_input"><input  disabled="{{showInfo}}" name="legal_person" value="{{form.legal_person}}" placeholder="点此填写" /></view>
+    <view class="section_input"><input  disabled="{{!showSaveBtn}}" name="legal_person" value="{{form.legal_person}}" placeholder="点此填写" /></view>
   </view>
 
     <view class="section">
     <view class="section__title">法人手机</view>
-    <view class="section_input"><input  disabled="{{showInfo}}" name="legal_phone" value="{{form.legal_phone}}" placeholder="点此填写" /></view>
+    <view class="section_input"><input  disabled="{{!showSaveBtn}}" name="legal_phone" value="{{form.legal_phone}}" placeholder="点此填写" /></view>
   </view>
 
 <!--  
@@ -34,22 +34,22 @@
 
   <view class="section">
     <view class="section__title">经办人姓名</view>
-    <view class="section_input"><input  disabled="{{showInfo}}" name="jbr_name" value="{{form.jbr_name}}" placeholder="点此填写" /></view>
+    <view class="section_input"><input  disabled="{{!showSaveBtn}}" name="jbr_name" value="{{form.jbr_name}}" placeholder="点此填写" /></view>
   </view>
 
   <view class="section">
     <view class="section__title">经办人身份证</view>
-    <view class="section_input"><input disabled="{{showInfo}}" name="jbr_ID" value="{{form.jbr_ID}}" placeholder="点此填写" /></view>
+    <view class="section_input"><input disabled="{{!showSaveBtn}}" name="jbr_ID" value="{{form.jbr_ID}}" placeholder="点此填写" /></view>
   </view>
 
   <view class="section">
     <view class="section__title">经办人邮箱</view>
-    <view class="section_input"><input disabled="{{showInfo}}" name="jbr_mail" value="{{form.jbr_mail}}"  placeholder="点此填写" /></view>
+    <view class="section_input"><input disabled="{{!showSaveBtn}}" name="jbr_mail" value="{{form.jbr_mail}}"  placeholder="点此填写" /></view>
   </view>
 
   <view class="section">
     <view class="section__title">经办人手机</view>
-    <view class="section_input"><input disabled="{{showInfo}}" name="jbr_phone" value="{{form.jbr_phone}}" placeholder="点此填写" /></view>
+    <view class="section_input"><input disabled="{{!showSaveBtn}}" name="jbr_phone" value="{{form.jbr_phone}}" placeholder="点此填写" /></view>
   </view>
   <input type='hidden' value="{{form.wxopenid}}" id="dsf" name='status'></input>
 
@@ -57,6 +57,10 @@
 <button wx:if="{{showInfo && !hiddenEditBtn}}"  bindtap="editUser" name="btnEdit" class="btnSubmit">修改</button>
     <button  wx:if="{{!showInfo}}" formType="submit" name="btnSubmit" class="btnSubmit">注册</button>
     <button wx:if="{{showSaveBtn}}" formType="submit" name="btnSubmit" class="btnSubmit">保存</button>
+
+    <view wx:if="{{showInfo}}"  bindtap="deleteUser" name="btnDelete" class="deleteUser">注销</view>
+
+    
 
   </view>
 

@@ -6,9 +6,9 @@
 
 <view  class="top_img">
 <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
-  <block  wx:for="{{imgUrls}}" wx:key="id" wx:for-item="cell">
+  <block  wx:for="{{imgUrls2}}" wx:key="id" wx:for-item="cell">
     <swiper-item  >
-      <navigator url='../webview/gogzis?id={{cell.id}}'><image src="{{cell.url}}" class="slide-image" /></navigator>
+      <navigator url='../webview/gogzis?id={{cell.id}}'><image mode='aspectFit' src="{{cell.url}}" class="slide-image" /></navigator>
     </swiper-item>
   </block>
 </swiper>
@@ -24,13 +24,13 @@
     </block>-->
 
     <view>
-    <text class="register_org_name">中国物品编码中心</text>
-    <!-- 
+    <!-- <text class="register_org_name">中国物品编码中心</text> -->
+    
   <navigator url="../register/register" class="register_org_name" wx:if="{{!haveRegistered}}">暂未绑定法人</navigator>
   
  <block wx:else>
   <navigator url="../register/register?method=view" class="register_org_name">{{register_org_name}}</navigator>
-    </block>-->
+    </block>
   </view>
   </view>
 
