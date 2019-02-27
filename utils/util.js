@@ -128,7 +128,7 @@ function initValidate(page) {
     jbr_name: {
       required: true,
     },
-    jbr_ID: { required: true, idcard: true, },
+    //jbr_ID: { required: true, idcard: true, },
     jbr_phone: { required: true, tel: true, },
     jbr_mail: { required: true, email: true, },
 

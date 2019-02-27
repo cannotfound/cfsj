@@ -507,7 +507,7 @@ Page({
         legal_phone: e.detail.value.legal_phone,
         jbr_name: e.detail.value.jbr_name,
         jbr_phone: e.detail.value.jbr_phone,
-        jbr_ID: e.detail.value.jbr_ID,
+        //jbr_ID: e.detail.value.jbr_ID,
         jbr_mail: e.detail.value.jbr_mail,
         _csrf_token: '76be886ef32f9151fd9bbfbce9d53e0b',
         jbr_weixin: wx.getStorageSync('openid'),
@@ -536,7 +536,7 @@ Page({
 
               //wx.setStorageSync('has_registered', true);
               wx.redirectTo({
-                url: 'index?step=1',
+                url: 'index?step=2',
               })
             }
           })
@@ -589,6 +589,17 @@ Page({
             u_submit: true
           });
           wx.setStorageSync('u_submit', true);
+
+          wx.showModal({
+            title: '提示',
+            content: '提交成功！',
+            showCancel: false,
+            complete: function () {
+              wx.redirectTo({
+                url: 'index?step=3',
+              })
+            }
+          });
         }
 
       }

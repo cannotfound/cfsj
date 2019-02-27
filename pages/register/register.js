@@ -10,7 +10,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    form: {
+    form1: {
       org_name: '广州好喝饮料有限公司',
       org_code: '5465892319898484',
       jbr_name: '经先生',
@@ -65,15 +65,10 @@ Page({
           header: { 'Content-type': 'application/x-www-form-urlencoded' },
           data: { code: res.code, sec: app.globalData.secret },
           success: function (res) {
-
-
-            //console.log("authcode success.." + app.globalData.secret );
+            console.log('-----------')
             console.log(res);
             var openid = res.data;
-            that.data.form.wxopenid = openid;
-
-            //console.log($('status').val() + '=234');
-            //console.log(wx.createSelectorQuery().select());
+            that.data.form1.wxopenid = openid;
 
           },
           fail: function (ex) {
@@ -207,7 +202,8 @@ Page({
         org_name: e.detail.value.org_name, 
         legal_person: e.detail.value.legal_person, legal_phone: e.detail.value.legal_phone,
         jbr_name: e.detail.value.jbr_name, jbr_phone: e.detail.value.jbr_phone,
-        jbr_ID: e.detail.value.jbr_ID, jbr_mail: e.detail.value.jbr_mail,
+        //jbr_ID: e.detail.value.jbr_ID, 经办人身份证
+        jbr_mail: e.detail.value.jbr_mail,
         _csrf_token: '76be886ef32f9151fd9bbfbce9d53e0b',
         jbr_weixin: this.data.form.wxopenid,
         method: this.data.showInfo == true ? 'edit' : 'new',

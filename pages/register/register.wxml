@@ -37,10 +37,12 @@
     <view class="section_input"><input  disabled="{{!showSaveBtn}}" name="jbr_name" value="{{form.jbr_name}}" placeholder="点此填写" /></view>
   </view>
 
+<!-- 
   <view class="section">
     <view class="section__title">经办人身份证</view>
     <view class="section_input"><input disabled="{{!showSaveBtn}}" name="jbr_ID" value="{{form.jbr_ID}}" placeholder="点此填写" /></view>
   </view>
+  -->
 
   <view class="section">
     <view class="section__title">经办人邮箱</view>
