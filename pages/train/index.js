@@ -17,6 +17,20 @@ Page({
    */
   onLoad: function(options) {
 
+
+    var juser = wx.getStorageSync('juser');
+    if(juser == null || juser == ""){
+
+      wx.showModal({
+        title: '提示',
+        content: '请先绑定企业信息',
+        showCancel: false,
+        success(res){
+          wx.redirectTo({ url: '../register/register'});
+        }
+        });
+    }
+
     var fullname = wx.getStorageSync('lesson_fullname');
     this.setData({
       lesson_fullname: fullname,
