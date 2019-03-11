@@ -1,28 +1,42 @@
 @import "../../wxParse/wxParse.wxss";
+
 .container {
-
-  padding-top: 100px;
- 
+  padding-top: 5rem;
+  height: 100%;
 }
-.list{
+
+.list {
   width: 98%;
-
+  height: 100%;
 }
-.list view{
+
+.list::before {
+  content: "";
+  background: url(https://wx.gzis.org.cn/dszr/web/images/retail.png);
+  opacity: 0.05;
+  z-index: -20;
+  width: 98%;
+  height: 150%;
+  position: absolute;
+  top: 4rem;
+  left: 0px;
+}
+
+.list view {
   width: 98%;
   display: flex;
   justify-content: center;
 }
+
 .cell {
-  border-top: 1px solid palegreen;
-  border-left: 1px solid palegreen;
-  border-right: 1px solid palegreen;
+  border-top: 1px solid #4169e1;
+  border-left: 1px solid #4169e1;
+  border-right: 1px solid #4169e1;
   padding: 10px;
   width: 85%;
   font-size: 14px;
-
 }
 
 .foot-cell {
-  border-bottom: 1px solid palegreen;
+  border-bottom: 1px solid #4169e1;
 }
