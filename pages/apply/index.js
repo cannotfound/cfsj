@@ -11,7 +11,7 @@ Page({
     currentStep: 1,
     swiperHeight: 100,
     haveRegistered: false,
-    form: {
+    form1: {
       org_name: '广州好喝饮料有限公司',
       org_code: '5465892319898484',
       jbr_name: '经先生',
@@ -54,7 +54,7 @@ Page({
         console.log('复制到剪粘板成功！')
         wx.showModal({
           title: '提示',
-          content: '表格下载链接复制成功，退出小程序去下载吧！',
+          content: '表格下载链接复制成功，请打开电脑浏览器下载打印吧！',
         })
       }
     });

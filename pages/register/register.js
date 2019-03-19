@@ -10,7 +10,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    form: {
+    form1: {
       org_name: '广州好喝饮料有限公司',
       org_code: '5465892319898484',
       jbr_name: '经先生',
@@ -68,7 +68,7 @@ Page({
             console.log('-----------')
             console.log(res);
             var openid = res.data;
-            that.data.form.wxopenid = openid;
+            that.data.form1.wxopenid = openid;
 
           },
           fail: function (ex) {

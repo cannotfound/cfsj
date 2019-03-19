@@ -86,14 +86,14 @@ Page({
         console.log(res)
         if (res.statusCode === 200) {
           
-          
-          wx.saveFile({
-            tempFilePath: res.tempFilePath,
-            success: function(res){
-              console.log(res)
+          //最大存储10M,保存一次附件占用很快超额.直接打开吧
+          //wx.saveFile({
+           // tempFilePath: res.tempFilePath,
+           // success: function(res){
+            //  console.log(res)
               
           wx.openDocument({
-            filePath: res.savedFilePath,
+            filePath: res.tempFilePath,
             success: function (res) {
               console.log('打开文档成功')
               wx.showShareMenu({
@@ -107,8 +107,8 @@ Page({
                 icon: 'none'
               })
             }
-          })
-            }
+         // })
+            //}
           })
         }
       },
