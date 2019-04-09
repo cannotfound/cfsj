@@ -31,7 +31,9 @@ page{
 .title {
   padding: 5px 10px 5px 5px;
   font-size: 16px;
-
+     overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .row {
