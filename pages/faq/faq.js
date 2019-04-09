@@ -10,6 +10,7 @@ Page({
   data: {
     list: [],
     item: null,
+    title: "我的新产品包装发生变化，要重新编制条码吗？",
   },
 
   /**

@@ -69,7 +69,7 @@
 
 <view class="v5 vall" bindtap='btFaq'>
 <view><image  src="/images/faq.png"></image></view>
-<view><text>业务问答</text></view>
+<view><text>常见问题</text></view>
 </view>
 
 </view>

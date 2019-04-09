@@ -2,17 +2,27 @@
 
 
 
-<view  class='list'>
+<view  id='list'>
 
 <view wx:for="{{list}}" wx:for-index="key" wx:key='cell.id'  wx:for-item="cell">
-<navigator class="cell" url='show?id={{cell.id}}'>{{cell.title}}</navigator>
+<!-- <navigator class="cell" url='show?id={{cell.id}}'>{{cell.title}}</navigator> -->
+
+<navigator class="row" url="show?id={{cell.id}}">
+<view>
+<view class="edit_date">{{cell.edit_date}}</view> 
+<view class="title">{{cell.title}}</view> 
+<view class="detail">查看详细回答</view> 
+
+</view>
+</navigator>
 </view>
 
+<!-- 
 
 <view>
 <navigator  class="foot-cell cell">更多FAQ待更新</navigator>
 </view>
-
+-->
 </view>
 
 
