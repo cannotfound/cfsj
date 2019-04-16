@@ -1,0 +1,56 @@
+/* pages/article/article.wxss */
+page{
+  height: 100%;
+  width: 100%;
+}
+.container {
+  padding-top: 1vh;
+}
+
+#list {
+  width: 98%;
+    align-items: center;
+    margin-top: 0.5vh;
+    margin-bottom: 2vh;
+  justify-content: center;
+}
+#list > view, #list > view > navigator{
+  margin-top: 1vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.edit_date {
+  margin: 3px 10px 10px 0px;
+  padding: 5px 10px 5px 5px;
+  font-size: 14px;
+  width: 30%;
+}
+
+.title {
+  padding: 5px 10px 5px 5px;
+  font-size: 16px;
+
+}
+
+.row {
+  font-size: 18px;
+  border: 0.5px solid #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  outline: none;
+  padding: 4px 6px;
+  margin: 10px 0 0 0;
+  background:  #80ba27;
+  width: 90%;
+  color: #FFFFFF;
+}
+.row > view{ width: 99%; }
+.detail {
+  border-top: 1px solid #EBEBEB;
+  font-size: 11px;
+  margin: 20px 10px 0px 5px;
+  padding: 10px 0px 3px 1px;
+}

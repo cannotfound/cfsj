@@ -1,0 +1,19 @@
+<view class="container">
+
+
+<view id='list'>
+
+<view wx:for="{{list}}" wx:for-index="key" wx:key='value.id'  wx:for-item="value">
+
+<view class="row" id='{{value.file_path}}' bindtap="downloadFile">
+<view>
+<view class="title">{{value.file_label}}</view>
+<view class="detail">点击下载</view> 
+
+</view>
+</view>
+</view>
+
+
+</view>
+</view>

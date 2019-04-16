@@ -51,7 +51,7 @@
 
 <view class='v2 vall' bindtap='btTongzhi'> 
 <view><image  src="/images/tongzhi.png"></image></view>
-<view><text>通知公告</text></view>
+<view><text>表格下载</text></view>
 </view>
 
 <view class='v3 vall' bindtap='btZhinan'>

@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/index/index",
     "pages/train/sign",
     "pages/register/register",
@@ -16,7 +15,8 @@
     "pages/apply/index",
     "pages/apply/showAccount",
     "pages/guide/index",
-    "pages/guide/show"
+    "pages/guide/show",
+    "pages/opendoc/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

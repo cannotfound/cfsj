@@ -146,7 +146,7 @@ Page({
   },
   btTongzhi() {
     wx.navigateTo({
-      url: '../article/article',
+      url: '../opendoc/index',
     })
   },
   btZhinan() {
