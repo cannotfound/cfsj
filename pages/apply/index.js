@@ -381,15 +381,19 @@ Page({
               console.log(res)
               if (res.statusCode === 200) {
 
-                wx.saveFile({
-                  tempFilePath: res.tempFilePath,
-                  success: function (res) {
-                    console.log(res)
-                    wx.previewImage({
-                      urls: [res.savedFilePath],
-                    })
-                  }
+                wx.previewImage({
+                  urls: [res.tempFilePath],
                 })
+
+                // wx.saveFile({
+                //   tempFilePath: res.tempFilePath,
+                //   success: function (res) {
+                //     console.log(res)
+                //     wx.previewImage({
+                //       urls: [res.savedFilePath],
+                //     })
+                //   }
+                // })
               }
             },
             complete(res){
