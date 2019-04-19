@@ -205,7 +205,7 @@ Page({
         //jbr_ID: e.detail.value.jbr_ID, 经办人身份证
         jbr_mail: e.detail.value.jbr_mail,
         _csrf_token: '76be886ef32f9151fd9bbfbce9d53e0b',
-        jbr_weixin: this.data.form.wxopenid,
+        jbr_weixin: this.data.form1.wxopenid,
         method: this.data.showInfo == true ? 'edit' : 'new',
       });
 
