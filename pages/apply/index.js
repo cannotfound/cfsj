@@ -334,12 +334,15 @@ Page({
   },
   resetFileBtn: function(e) {
     var that = this;
+    var juser = wx.getStorageSync('juser');
+    if (juser == null) return;
+    var userid = juser.id;
     wx.request({
-      url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/uploadResetAjax',
+      url: 'https://wx.gzis.org.cn/dszr/web/index.php/apply/resetUploadAjax',
       method: 'POST',
       data: {
         'sec': app.globalData.secret,
-        'openid': wx.getStorageSync('openid'),
+        'userid': userid,
       },
       header: {
         'Content-type': 'application/x-www-form-urlencoded'
@@ -347,7 +350,7 @@ Page({
       success: function(res) {
         console.log(res)
         if (res.data == 'OK') {
-          that.stepOnload(1);
+          that.stepOnload(2);
         }
       }
     })
@@ -413,9 +416,15 @@ Page({
 
    },
   btViewTicket: function (e) { 
+    wx.showLoading({
+      title: '正在预览...',
+    });
     this.viewUploadImg(2);
   },
+  btnCancel:function(){
 
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

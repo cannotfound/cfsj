@@ -119,6 +119,8 @@
           <button wx:if='{{u_ticket}}' bindtap='btViewTicket' class="btnReady">汇款凭证已上传,点击可预览</button>
           <button wx:else class="btnSubmit" bindtap='uploadBtn' id="2">点击上传汇款凭证</button>
 
+          <button wx:if="{{u_license || u_ticket}}"class="btnSubmit" bindtap='resetFileBtn'>重新上传</button>
+
           <button wx:if="{{!u_submit}}" class="btnSubmit" bindtap='uploadSubmitTap' id="99">提交</button>
           <!-- <button wx:else class="btnSubmit" bindtap='stepto3' id="99">已提交</button> -->
 
